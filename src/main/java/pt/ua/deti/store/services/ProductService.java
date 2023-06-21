@@ -6,11 +6,11 @@ import pt.ua.deti.store.entities.ProductListingResponse;
 
 @Service
 public class ProductService {
-    public ProductListingResponse getProductListing(String productName) {
+    public ProductListingResponse getListing() {
         return null;
     }
 
-    public ProductResponse productById(String productId) {
+    public ProductResponse getProductById(String productId) {
         return null;
     }
 }

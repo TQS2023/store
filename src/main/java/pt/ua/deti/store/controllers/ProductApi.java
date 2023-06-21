@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import pt.ua.deti.store.entities.ProductListingResponse;
 
-@RestController("/product")
+@RestController("/api")
 public class ProductApi {
     @GetMapping("/product/all")
     public ProductListingResponse getAllProducts() {
