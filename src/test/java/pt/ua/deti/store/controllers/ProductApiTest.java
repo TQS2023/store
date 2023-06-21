@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @TestPropertySource(locations = "classpath:inmemdb.properties")
@@ -48,6 +48,8 @@ public class ProductApiTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.products[0].title").value("Product title"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.products[0].description").value("Product description"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.products[0].price").value(12.99));
+
+        verify(productService, times(1)).getListing();
     }
 
     @Test
@@ -61,6 +63,8 @@ public class ProductApiTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.products", hasSize(0)));
+
+        verify(productService, times(1)).getListing();
     }
 
     @Test
@@ -73,6 +77,8 @@ public class ProductApiTest {
                 )
                 .andExpect(MockMvcResultMatchers.status().is5xxServerError())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(false));
+
+        verify(productService, times(1)).getListing();
     }
 
     @Test
@@ -85,6 +91,8 @@ public class ProductApiTest {
                 )
                 .andExpect(MockMvcResultMatchers.status().is5xxServerError())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(false));
+
+        verify(productService, times(1)).getListing();
     }
 
     @Test
@@ -100,6 +108,8 @@ public class ProductApiTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.title").value("Product title"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.description").value("Product description"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.price").value(12.99));
+
+        verify(productService, times(1)).getProductById(anyString());
     }
 
     @Test
@@ -111,5 +121,7 @@ public class ProductApiTest {
                         MockMvcRequestBuilders.get("/api/product/productID").contentType("application/json")
                 )
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
+
+        verify(productService, times(1)).getProductById(anyString());
     }
 }
