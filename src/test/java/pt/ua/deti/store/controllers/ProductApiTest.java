@@ -44,7 +44,7 @@ public class ProductApiTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.products", hasSize(1)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.products[0].id").value("productID"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.products[0].productId").value("productID"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.products[0].title").value("Product title"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.products[0].description").value("Product description"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.products[0].price").value(12.99));
@@ -84,7 +84,7 @@ public class ProductApiTest {
                         MockMvcRequestBuilders.get("/api/product/productID").contentType("application/json")
                 )
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value("productID"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.productId").value("productID"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.title").value("Product title"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.description").value("Product description"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.price").value(12.99));
