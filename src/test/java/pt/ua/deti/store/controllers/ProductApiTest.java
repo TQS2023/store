@@ -76,6 +76,18 @@ public class ProductApiTest {
     }
 
     @Test
+    @DisplayName("Test if we get something even if the service returns null")
+    void testListingNull() throws Exception {
+        when(productService.getListing()).thenReturn(null);
+
+        mockMvc.perform(
+                        MockMvcRequestBuilders.get("/api/product/all").contentType("application/json")
+                )
+                .andExpect(MockMvcResultMatchers.status().is5xxServerError())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(false));
+    }
+
+    @Test
     @DisplayName("Test if we are able to retrieve a product by its ID.")
     void testGetProduct() throws Exception {
         when(productService.getProductById("productID")).thenReturn(new ProductResponse("productID", "Product title", "Product description", 12.99));
