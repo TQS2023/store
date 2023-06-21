@@ -28,4 +28,21 @@ public class ProductEntity {
         this.price = price;
         this.id = id;
     }
+
+    public String getProductId() {
+        return id;
+    }
+
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public double getPrice() {
+        return price;
+    }
 }

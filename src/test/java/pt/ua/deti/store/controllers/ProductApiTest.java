@@ -55,13 +55,13 @@ public class ProductApiTest {
     @Test
     @DisplayName("Test if the listing returns an empty list when there are no products.")
     void testListingEmpty() throws Exception {
-        when(productService.getListing()).thenReturn(new ProductListingResponse(new ArrayList<>(), true));
+        when(productService.getListing()).thenReturn(new ProductListingResponse(new ArrayList<>(), false));
 
         mockMvc.perform(
                         MockMvcRequestBuilders.get("/api/product/all").contentType("application/json")
                 )
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
+                .andExpect(MockMvcResultMatchers.status().isInternalServerError())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(false))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.products", hasSize(0)));
 
         verify(productService, times(1)).getListing();

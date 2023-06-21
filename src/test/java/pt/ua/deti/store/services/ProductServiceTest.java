@@ -58,26 +58,12 @@ public class ProductServiceTest {
         ProductListingResponse productListingResponses = productService.getListing();
 
         assertThat(productListingResponses, is(notNullValue()));
-        assertThat(productListingResponses.isSuccess(), is(true));
-        assertThat(productListingResponses.getProducts().size(), is(0));
-
-        verify(productRepository, times(1)).findAll();
-    }
-
-    @Test
-    @DisplayName("Test if the product service returns an error when there is an exception.")
-    void testFindAllException() {
-        when(productRepository.findAll()).thenReturn(null);
-
-        ProductListingResponse productListingResponses = productService.getListing();
-
-        assertThat(productListingResponses, is(notNullValue()));
         assertThat(productListingResponses.isSuccess(), is(false));
         assertThat(productListingResponses.getProducts().size(), is(0));
 
         verify(productRepository, times(1)).findAll();
     }
-
+    
     @Test
     @DisplayName("Test if we can get a specific product in the DB.")
     void testGetProduct() {

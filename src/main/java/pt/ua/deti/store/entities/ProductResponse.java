@@ -1,5 +1,7 @@
 package pt.ua.deti.store.entities;
 
+import pt.ua.deti.store.database.ProductEntity;
+
 public class ProductResponse {
     private final String productId;
     private final String title;
@@ -11,6 +13,10 @@ public class ProductResponse {
         this.title = title;
         this.description = description;
         this.price = price;
+    }
+
+    public ProductResponse(ProductEntity productEntity) {
+        this(productEntity.getProductId(), productEntity.getTitle(), productEntity.getDescription(), productEntity.getPrice());
     }
 
     public String getProductId() {
