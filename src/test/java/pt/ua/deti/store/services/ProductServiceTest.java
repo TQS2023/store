@@ -63,7 +63,7 @@ public class ProductServiceTest {
 
         verify(productRepository, times(1)).findAll();
     }
-    
+
     @Test
     @DisplayName("Test if we can get a specific product in the DB.")
     void testGetProduct() {
