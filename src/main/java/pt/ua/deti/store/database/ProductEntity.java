@@ -58,4 +58,8 @@ public class ProductEntity {
     public double getPrice() {
         return price;
     }
+
+    public String getAuthor() {
+        return author;
+    }
 }
