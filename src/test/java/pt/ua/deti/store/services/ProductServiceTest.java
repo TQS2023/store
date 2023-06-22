@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 @TestPropertySource(locations = "classpath:inmemdb.properties")
 @SpringBootTest
-public class ProductServiceTest {
+class ProductServiceTest {
     @Autowired
     private ProductService productService;
 

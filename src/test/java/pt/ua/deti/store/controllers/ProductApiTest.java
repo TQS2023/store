@@ -24,7 +24,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 @TestPropertySource(locations = "classpath:inmemdb.properties")
 @WebMvcTest(ProductApi.class)
-public class ProductApiTest {
+class ProductApiTest {
     @Autowired
     private MockMvc mockMvc;
 
