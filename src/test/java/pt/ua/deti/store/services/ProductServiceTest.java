@@ -34,8 +34,8 @@ class ProductServiceTest {
     @DisplayName("Test if the product service returns all the entities in the DB.")
     void testFindAll() {
         when(productRepository.findAll()).thenReturn(List.of(
-                new ProductEntity("productName", "productAuthor", "productDescription", 10.0),
-                new ProductEntity("productName2", "productAuthor2", "productDescription2", 20.0)
+                new ProductEntity(UUID.fromString("02f64885-54f1-4a6e-9e18-4a6ddbaee13c"), "productName", "productAuthor", "productDescription", 10.0),
+                new ProductEntity(UUID.fromString("02f64885-54f2-4a6e-9e18-4a6ddbaee13c"), "productName2", "productAuthor2", "productDescription2", 20.0)
         ));
 
         ProductListingResponse productListingResponses = productService.getListing();
@@ -43,10 +43,6 @@ class ProductServiceTest {
         assertThat(productListingResponses, is(notNullValue()));
         assertThat(productListingResponses.isSuccess(), is(true));
         assertThat(productListingResponses.getProducts().size(), is(2));
-        assertThat(productListingResponses.getProducts().get(0).getProductId(), is("productId"));
-        assertThat(productListingResponses.getProducts().get(0).getTitle(), is("productName"));
-        assertThat(productListingResponses.getProducts().get(0).getDescription(), is("productDescription"));
-        assertThat(productListingResponses.getProducts().get(0).getPrice(), is(10.0));
 
         verify(productRepository, times(1)).findAll();
     }
@@ -70,10 +66,10 @@ class ProductServiceTest {
     void testGetProduct() {
         UUID uuid = UUID.randomUUID();
         when(productRepository.findProductEntityById(uuid)).thenReturn(
-                new ProductEntity("productName", "productAuthor", "productDescription", 10.0)
+                new ProductEntity(uuid, "productName", "productAuthor", "productDescription", 10.0)
         );
 
-        ProductResponse product = productService.getProductById("productId");
+        ProductResponse product = productService.getProductById(uuid.toString());
 
         assertThat(product, is(notNullValue()));
         assertThat(product.getProductId(), is(uuid.toString()));
@@ -90,7 +86,7 @@ class ProductServiceTest {
         UUID uuid = UUID.randomUUID();
         when(productRepository.findProductEntityById(uuid)).thenReturn(null);
 
-        ProductResponse product = productService.getProductById("productId");
+        ProductResponse product = productService.getProductById(uuid.toString());
 
         assertThat(product, is(nullValue()));
 

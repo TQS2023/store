@@ -34,6 +34,14 @@ public class ProductEntity {
         this.price = price;
     }
 
+    public ProductEntity(UUID id, String title, String author, String description, double price) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.description = description;
+        this.price = price;
+    }
+
     public UUID getProductId() {
         return id;
     }
