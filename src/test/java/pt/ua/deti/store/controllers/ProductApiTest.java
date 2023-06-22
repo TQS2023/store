@@ -35,7 +35,7 @@ class ProductApiTest {
     @DisplayName("Test if the listing returns all products correctly.")
     void testListing() throws Exception {
         when(productService.getListing()).thenReturn(new ProductListingResponse(List.of(
-                new ProductResponse("productID", "Product title", "Product description", 12.99)
+                new ProductResponse("productID", "Product title", "Product description", 12.99, "Product Author")
         ), true));
 
         mockMvc.perform(
@@ -98,7 +98,7 @@ class ProductApiTest {
     @Test
     @DisplayName("Test if we are able to retrieve a product by its ID.")
     void testGetProduct() throws Exception {
-        when(productService.getProductById("productID")).thenReturn(new ProductResponse("productID", "Product title", "Product description", 12.99));
+        when(productService.getProductById("productID")).thenReturn(new ProductResponse("productID", "Product title", "Product description", 12.99, "Product Author"));
 
         mockMvc.perform(
                         MockMvcRequestBuilders.get("/api/product/productID").contentType("application/json")

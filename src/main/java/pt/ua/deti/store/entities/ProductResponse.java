@@ -7,16 +7,18 @@ public class ProductResponse {
     private final String title;
     private final String description;
     private final double price;
+    private final String author;
 
-    public ProductResponse(String productId, final String title, final String description, final double price) {
+    public ProductResponse(String productId, final String title, final String description, final double price, final String author) {
         this.productId = productId;
         this.title = title;
         this.description = description;
         this.price = price;
+        this.author = author;
     }
 
     public ProductResponse(ProductEntity productEntity) {
-        this(productEntity.getProductId().toString(), productEntity.getTitle(), productEntity.getDescription(), productEntity.getPrice());
+        this(productEntity.getProductId().toString(), productEntity.getTitle(), productEntity.getDescription(), productEntity.getPrice(), productEntity.getAuthor());
     }
 
     public String getProductId() {
@@ -33,5 +35,9 @@ public class ProductResponse {
 
     public double getPrice() {
         return price;
+    }
+
+    public String getAuthor() {
+        return author;
     }
 }
