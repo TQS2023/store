@@ -13,9 +13,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import pt.ua.deti.store.database.User;
+import pt.ua.deti.store.database.UserEntity;
 import pt.ua.deti.store.database.UserRepository;
-import pt.ua.deti.store.security.UserDetailedView;
 
 @Configuration
 public class SecurityConfig  {
@@ -33,7 +32,7 @@ public class SecurityConfig  {
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> {
-            User user = userRepository.findByEmail(username);
+            UserEntity user = userRepository.findByEmail(username);
             if (user == null)
                 throw new UsernameNotFoundException("User " + username + " not found");
             return new UserDetailedView(user.getEmail(), user.getPassword());
