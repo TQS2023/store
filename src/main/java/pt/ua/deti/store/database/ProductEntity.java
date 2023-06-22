@@ -2,34 +2,47 @@ package pt.ua.deti.store.database;
 
 import jakarta.persistence.*;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "product")
 public class ProductEntity {
     @Id
     @GeneratedValue(generator = "uuid")
-    private String id;
+    private UUID id;
 
-    @Column(name = "title")
+    @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "description")
+    @Column(name = "author", nullable = false)
+    private String author;
+
+    @Column(name = "description", nullable = false, columnDefinition = "LONGTEXT")
     private String description;
 
-    @Column(name = "price")
-    private double price;
+    @Column(name = "price", nullable = false)
+    private Double price;
 
     public ProductEntity() {
 
     }
 
-    public ProductEntity(String id, String title, String description, double price) {
+    public ProductEntity(String title, String author, String description, double price) {
         this.title = title;
+        this.author = author;
         this.description = description;
         this.price = price;
-        this.id = id;
     }
 
-    public String getProductId() {
+    public ProductEntity(UUID id, String title, String author, String description, double price) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.description = description;
+        this.price = price;
+    }
+
+    public UUID getProductId() {
         return id;
     }
 

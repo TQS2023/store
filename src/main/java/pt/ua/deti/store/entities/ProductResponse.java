@@ -16,7 +16,7 @@ public class ProductResponse {
     }
 
     public ProductResponse(ProductEntity productEntity) {
-        this(productEntity.getProductId(), productEntity.getTitle(), productEntity.getDescription(), productEntity.getPrice());
+        this(productEntity.getProductId().toString(), productEntity.getTitle(), productEntity.getDescription(), productEntity.getPrice());
     }
 
     public String getProductId() {

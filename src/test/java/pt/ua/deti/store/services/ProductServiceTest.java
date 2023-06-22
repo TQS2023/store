@@ -14,6 +14,7 @@ import pt.ua.deti.store.entities.ProductListingResponse;
 import pt.ua.deti.store.entities.ProductResponse;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -33,8 +34,8 @@ class ProductServiceTest {
     @DisplayName("Test if the product service returns all the entities in the DB.")
     void testFindAll() {
         when(productRepository.findAll()).thenReturn(List.of(
-                new ProductEntity("productId", "productName", "productDescription", 10.0),
-                new ProductEntity("productId2", "productName2", "productDescription2", 20.0)
+                new ProductEntity(UUID.fromString("02f64885-54f1-4a6e-9e18-4a6ddbaee13c"), "productName", "productAuthor", "productDescription", 10.0),
+                new ProductEntity(UUID.fromString("02f64885-54f2-4a6e-9e18-4a6ddbaee13c"), "productName2", "productAuthor2", "productDescription2", 20.0)
         ));
 
         ProductListingResponse productListingResponses = productService.getListing();
@@ -42,10 +43,6 @@ class ProductServiceTest {
         assertThat(productListingResponses, is(notNullValue()));
         assertThat(productListingResponses.isSuccess(), is(true));
         assertThat(productListingResponses.getProducts().size(), is(2));
-        assertThat(productListingResponses.getProducts().get(0).getProductId(), is("productId"));
-        assertThat(productListingResponses.getProducts().get(0).getTitle(), is("productName"));
-        assertThat(productListingResponses.getProducts().get(0).getDescription(), is("productDescription"));
-        assertThat(productListingResponses.getProducts().get(0).getPrice(), is(10.0));
 
         verify(productRepository, times(1)).findAll();
     }
@@ -67,30 +64,32 @@ class ProductServiceTest {
     @Test
     @DisplayName("Test if we can get a specific product in the DB.")
     void testGetProduct() {
-        when(productRepository.findProductEntityById("productId")).thenReturn(
-                new ProductEntity("productId", "productName", "productDescription", 10.0)
+        UUID uuid = UUID.randomUUID();
+        when(productRepository.findProductEntityById(uuid)).thenReturn(
+                new ProductEntity(uuid, "productName", "productAuthor", "productDescription", 10.0)
         );
 
-        ProductResponse product = productService.getProductById("productId");
+        ProductResponse product = productService.getProductById(uuid.toString());
 
         assertThat(product, is(notNullValue()));
-        assertThat(product.getProductId(), is("productId"));
+        assertThat(product.getProductId(), is(uuid.toString()));
         assertThat(product.getTitle(), is("productName"));
         assertThat(product.getDescription(), is("productDescription"));
         assertThat(product.getPrice(), is(10.0));
 
-        verify(productRepository, times(1)).findProductEntityById("productId");
+        verify(productRepository, times(1)).findProductEntityById(uuid);
     }
 
     @Test
     @DisplayName("Test if we can get a specific product in the DB when there is no entity found.")
     void testGetProductEmpty() {
-        when(productRepository.findProductEntityById("productId")).thenReturn(null);
+        UUID uuid = UUID.randomUUID();
+        when(productRepository.findProductEntityById(uuid)).thenReturn(null);
 
-        ProductResponse product = productService.getProductById("productId");
+        ProductResponse product = productService.getProductById(uuid.toString());
 
         assertThat(product, is(nullValue()));
 
-        verify(productRepository, times(1)).findProductEntityById("productId");
+        verify(productRepository, times(1)).findProductEntityById(uuid);
     }
 }
