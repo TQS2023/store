@@ -20,23 +20,25 @@ public class Loader implements CommandLineRunner {
     public void run(String... args) throws Exception {
         if (productRepository.findAll().size() == 0) {
             FileReader reader = new FileReader("src/main/resources/data.csv");
-            CSVReader parser = new CSVReader(reader);
-            String[] line;
-            System.out.println("Loading data...");
-            int i = 0;
 
-            while ((line = parser.readNext()) != null) {
-                if (i > 200) break;
+            try (CSVReader parser = new CSVReader(reader)) {
+                String[] line;
+                System.out.println("Loading data...");
+                int i = 0;
 
-                ProductEntity product = new ProductEntity(
-                        line[0],
-                        line[1],
-                        line[5],
-                        Double.parseDouble(line[8])
-                );
+                while ((line = parser.readNext()) != null) {
+                    if (i > 200) break;
 
-                productRepository.save(product);
-                i++;
+                    ProductEntity product = new ProductEntity(
+                            line[0],
+                            line[1],
+                            line[5],
+                            Double.parseDouble(line[8])
+                    );
+
+                    productRepository.save(product);
+                    i++;
+                }
             }
         }
     }
