@@ -17,7 +17,7 @@ public class AuthenticationService {
         return null;
     }
 
-    public ProfileUpdateResponse updateProfile(String user, ProfileRequest profileUpdateRequest) {
+    public ProfileUpdateResponse updateProfile(String user, UserRequest userRequest) {
         return null;
     }
 }

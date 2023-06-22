@@ -53,7 +53,7 @@ public class SecurityConfig  {
     }
 
     @Bean
-    public SecurityFilterChain configure(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authenticationProvider(authenticationProvider());
@@ -67,6 +67,11 @@ public class SecurityConfig  {
                             );
                         }
                 );
+
+        http.authorizeHttpRequests(authorize -> authorize
+//                .requestMatchers("/api/product/**", "/error", "/api/auth/register", "/api/auth/login").permitAll()
+                .anyRequest().permitAll()
+        );
 
         return http.build();
     }

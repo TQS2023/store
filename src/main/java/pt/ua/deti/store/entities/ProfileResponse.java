@@ -2,7 +2,6 @@ package pt.ua.deti.store.entities;
 
 
 public class ProfileResponse {
-    private final String password;
     private final String address;
     private final String email;
     private final String creditCardNumber;
@@ -10,18 +9,13 @@ public class ProfileResponse {
     private final String creditCardCVC;
     private final PickupPointResponse preferredPickupPointId;
 
-    public ProfileResponse(String password, String address, String email, String creditCardNumber, Long creditCardValidity, String creditCardCVC, PickupPointResponse preferredPickupPointId) {
-        this.password = password;
+    public ProfileResponse(String address, String email, String creditCardNumber, Long creditCardValidity, String creditCardCVC, PickupPointResponse preferredPickupPointId) {
         this.address = address;
         this.email = email;
         this.creditCardNumber = creditCardNumber;
         this.creditCardValidity = creditCardValidity;
         this.creditCardCVC = creditCardCVC;
         this.preferredPickupPointId = preferredPickupPointId;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public String getAddress() {

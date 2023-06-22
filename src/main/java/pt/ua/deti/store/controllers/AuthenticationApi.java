@@ -25,7 +25,7 @@ public class AuthenticationApi {
 
     @PreAuthorize("@jwtFilter.filter()")
     @PostMapping("/profile")
-    public ProfileUpdateResponse updateProfile(@RequestBody ProfileRequest newProfile) {
+    public ProfileUpdateResponse updateProfile(@RequestBody UserRequest userRequest) {
         return null;
     }
 }
