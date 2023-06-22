@@ -8,6 +8,7 @@ import pt.ua.deti.store.entities.ProductListingResponse;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ProductService {
@@ -31,7 +32,7 @@ public class ProductService {
     }
 
     public ProductResponse getProductById(String productId) {
-        ProductEntity productEntity = repository.findProductEntityById(productId);
+        ProductEntity productEntity = repository.findProductEntityById(UUID.fromString(productId));
         if (productEntity == null) {
             return null;
         }
