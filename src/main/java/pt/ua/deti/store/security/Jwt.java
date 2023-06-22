@@ -6,6 +6,10 @@ import org.springframework.beans.factory.annotation.Value;
 
 public class Jwt {
     @Value("${jwt.secret}")
+    public void setSecret(String secret) {
+        Jwt.secret = secret;
+    }
+
     private static String secret;
 
     public static boolean validate(String token) {
