@@ -85,8 +85,8 @@
 				</executions>
 				<configuration>
 					<excludes>
-						<exclude>**/entities/**</exclude>
-						<exclude>**/database/**</exclude>
+						<exclude>**/entities/*</exclude>
+						<exclude>**/database/*</exclude>
 					</excludes>
 				</configuration>
 			</plugin>
