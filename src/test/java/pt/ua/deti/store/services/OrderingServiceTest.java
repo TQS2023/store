@@ -33,6 +33,9 @@ class OrderingServiceTest {
     private UserRepository userRepository;
 
     @MockBean
+    private ProductRepository productRepository;
+
+    @MockBean
     private PackageRepository packageRepository;
 
     @Test
@@ -58,9 +61,18 @@ class OrderingServiceTest {
             ),
             "address"
         ));
+        UUID productUuid = UUID.randomUUID();
+        when(productRepository.findByProductId(productUuid)).thenReturn(new ProductEntity(
+                productUuid,
+                "Title",
+                "Author",
+                "Description",
+                12.99
+                )
+        );
 
         CreatePackageResponse response = orderingService.createPackage("User1", new ProductListRequest(
-                List.of(UUID.randomUUID().toString(), UUID.randomUUID().toString(), UUID.randomUUID().toString())
+                List.of(productUuid.toString(), productUuid.toString(), productUuid.toString())
         ));
 
         assertThat(response, is(notNullValue()));
