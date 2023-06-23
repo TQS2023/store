@@ -8,7 +8,9 @@ import pt.ua.deti.store.entities.PackageResponse;
 import pt.ua.deti.store.entities.ProductListRequest;
 import pt.ua.deti.store.picky.Api;
 import pt.ua.deti.store.picky.PickyPackage;
+import pt.ua.deti.store.picky.PickyPackageRequest;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -31,21 +33,13 @@ public class OrderingService {
         }
 
         UserEntity userEntity = userRepository.findByEmail(user);
-        PackageEntity packageEntity = new PackageEntity(
-                null,
-                userEntity,
-                "INTRANSIT",
-                productListRequest.getProducts().stream().map(product -> productRepository.findByProductId(UUID.fromString(product))).toList(),
-                userEntity.getAddress()
-        );
-        packageEntity = packageRepository.save(packageEntity);
+        List<ProductEntity> products = productListRequest.getProducts().stream().map(product -> productRepository.findByProductId(UUID.fromString(product))).toList();
 
-        PickyPackage pickyPackage = new PickyPackage(
-                packageEntity.getPackageId().toString(),
-                packageEntity.getUserId().getUserId().toString(),
-                packageEntity.getStatus(),
-                packageEntity.getProducts().stream().map(product -> product.getProductId().toString()).toArray(String[]::new),
-                packageEntity.getAddress()
+        PickyPackageRequest pickyPackage = new PickyPackageRequest(
+                userEntity.getUserId().toString(),
+                "INTRANSIT",
+                products.stream().map(product -> product.getProductId().toString()).toArray(String[]::new),
+                userEntity.getAddress()
         );
         pickyApi.createPackage(pickyPackage);
         return new CreatePackageResponse(true);

@@ -38,6 +38,10 @@ public class PickyService {
                     p.getAddress()
             );
 
+            if (pickupPointRepository.existsByPickupPointId(UUID.fromString(p.getId()))) {
+                return;
+            }
+
             pickupPointRepository.save(pEnt);
         });
     }
@@ -50,6 +54,7 @@ public class PickyService {
             return;
         }
 
+
         Arrays.stream(pickyPackages.getPackages()).forEach(p -> {
             PackageEntity pEnt = new PackageEntity(
                     UUID.fromString(p.getPackageId()),
@@ -58,6 +63,11 @@ public class PickyService {
                     Arrays.stream(p.getItems()).map(product -> productRepository.findByProductId(UUID.fromString(product))).toList(),
                     p.getAddress()
             );
+
+            if (packageRepository.existsByPackageId(UUID.fromString(p.getPackageId()))) {
+                return;
+            }
+
             packageRepository.save(pEnt);
         });
     }

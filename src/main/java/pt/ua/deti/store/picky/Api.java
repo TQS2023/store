@@ -18,7 +18,7 @@ public class Api {
         picky = retrofit.create(ApiDecl.class);
     }
 
-    public PickyCreatePackage createPackage(PickyPackage pickyPackage) {
+    public PickyCreatePackage createPackage(PickyPackageRequest pickyPackage) {
         try {
             return picky.createPackage(pickyPackage).execute().body();
         } catch (Exception e) {
