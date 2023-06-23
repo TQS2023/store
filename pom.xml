@@ -17,7 +17,8 @@
 		<java.version>17</java.version>
 		<sonar.organization>tqs2023</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
-		<sonar.exclusions>**/entities/*.java, **/database/*.java, **/security/*.java</sonar.exclusions>
+		<!-- These I can't test because they are mainly getters and setters -->
+		<sonar.exclusions>**/entities/*.java, **/database/*.java, **/security/*.java, **/picky/*.java</sonar.exclusions>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -34,6 +35,16 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.squareup.retrofit2</groupId>
+			<artifactId>retrofit</artifactId>
+			<version>2.9.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.squareup.retrofit2</groupId>
+			<artifactId>converter-jackson</artifactId>
+			<version>2.9.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
