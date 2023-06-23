@@ -1,6 +1,9 @@
 package pt.ua.deti.store.entities;
 
 
+import pt.ua.deti.store.database.PickupPointEntity;
+import pt.ua.deti.store.database.UserEntity;
+
 public class UserRequest {
     private final String password;
     private final String address;
@@ -46,5 +49,9 @@ public class UserRequest {
 
     public String getPreferredPickupPointId() {
         return preferredPickupPointId;
+    }
+
+    public UserEntity toEntity() {
+        return new UserEntity(null, address, email, creditCardNumber, creditCardValidity, creditCardCVC, null);
     }
 }

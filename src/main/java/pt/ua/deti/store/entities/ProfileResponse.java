@@ -1,6 +1,8 @@
 package pt.ua.deti.store.entities;
 
 
+import pt.ua.deti.store.database.UserEntity;
+
 public class ProfileResponse {
     private final String address;
     private final String email;
@@ -16,6 +18,17 @@ public class ProfileResponse {
         this.creditCardValidity = creditCardValidity;
         this.creditCardCVC = creditCardCVC;
         this.preferredPickupPointId = preferredPickupPointId;
+    }
+
+    public static ProfileResponse fromEntity(UserEntity user) {
+        return new ProfileResponse(
+                user.getAddress(),
+                user.getEmail(),
+                user.getCreditCardNumber(),
+                user.getCreditCardValidity(),
+                user.getCreditCardCVC(),
+                PickupPointResponse.fromEntity(user.getPreferredPickupPointId())
+        );
     }
 
     public String getAddress() {

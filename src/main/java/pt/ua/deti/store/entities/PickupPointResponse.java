@@ -1,5 +1,7 @@
 package pt.ua.deti.store.entities;
 
+import pt.ua.deti.store.database.PickupPointEntity;
+
 import java.util.UUID;
 
 public class PickupPointResponse {
@@ -11,6 +13,11 @@ public class PickupPointResponse {
         this.pickupPointId = pickupPointId;
         this.name = name;
         this.address = address;
+    }
+
+    public static PickupPointResponse fromEntity(PickupPointEntity preferredPickupPoint) {
+        return new PickupPointResponse(preferredPickupPoint.getPickupPointId().toString(),
+                preferredPickupPoint.getName(), preferredPickupPoint.getAddress());
     }
 
     public String getPickupPointId() {

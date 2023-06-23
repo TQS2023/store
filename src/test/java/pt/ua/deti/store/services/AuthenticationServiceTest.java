@@ -10,6 +10,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.TestPropertySource;
 import pt.ua.deti.store.database.PickupPointEntity;
+import pt.ua.deti.store.database.PickupPointRepository;
 import pt.ua.deti.store.database.UserEntity;
 import pt.ua.deti.store.database.UserRepository;
 import pt.ua.deti.store.entities.*;
@@ -20,6 +21,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.emptyString;
+import static org.hamcrest.Matchers.not;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -34,6 +36,9 @@ class AuthenticationServiceTest {
 
     @MockBean
     private UserRepository userRepository;
+
+    @MockBean
+    private PickupPointRepository pickupPointRepository;
 
     @Test
     @DisplayName("Test if login functions correctly")
@@ -56,7 +61,7 @@ class AuthenticationServiceTest {
         TokenResponse response = authenticationService.login(request);
 
         assertThat(response, is(notNullValue()));
-        assertThat(response.getToken(), is(notNullValue()));
+        assertThat(response.getToken(), is(not(emptyString())));
         assertThat(response.isSuccess(), is(true));
 
         verify(userRepository, times(1)).findByEmail("user");
@@ -134,7 +139,28 @@ class AuthenticationServiceTest {
     @Test
     @DisplayName("Test if register works normally")
     void testRegister() {
+        UUID pickupPointUuid = UUID.randomUUID();
+
         when(userRepository.existsByEmail("user")).thenReturn(false);
+        when(pickupPointRepository.existsByPickupPointId(pickupPointUuid)).thenReturn(true);
+        when(pickupPointRepository.findByPickupPointId(pickupPointUuid)).thenReturn(new PickupPointEntity(
+                pickupPointUuid,
+                "name",
+                "address"
+        ));
+        when(userRepository.findByEmail("user")).thenReturn(new UserEntity(
+                passwordEncoder.encode("password"),
+                "address",
+                "user",
+                "creditCardNumber",
+                123L,
+                "creditCardCVC",
+                new PickupPointEntity(
+                        UUID.randomUUID(),
+                        "name",
+                        "address"
+                )
+        ));
 
         UserRequest request = new UserRequest(
                 "password",
@@ -143,7 +169,7 @@ class AuthenticationServiceTest {
                 "creditCardNumber",
                 123L,
                 "creditCardCVC",
-                UUID.randomUUID().toString()
+                pickupPointUuid.toString()
         );
         TokenResponse response = authenticationService.register(request);
 
@@ -153,6 +179,8 @@ class AuthenticationServiceTest {
 
         verify(userRepository, times(1)).findByEmail("user");
         verify(userRepository, times(1)).save(any(UserEntity.class));
+        verify(pickupPointRepository, times(1)).existsByPickupPointId(pickupPointUuid);
+        verify(pickupPointRepository, times(1)).findByPickupPointId(pickupPointUuid);
     }
 
     @Test
@@ -177,6 +205,8 @@ class AuthenticationServiceTest {
 
         verify(userRepository, times(1)).existsByEmail("user");
         verify(userRepository, times(0)).save(any(UserEntity.class));
+        verify(pickupPointRepository, times(0)).existsByPickupPointId(any(UUID.class));
+        verify(pickupPointRepository, times(0)).findByPickupPointId(any(UUID.class));
     }
 
     @Test
@@ -201,6 +231,8 @@ class AuthenticationServiceTest {
 
         verify(userRepository, times(0)).existsByEmail("user");
         verify(userRepository, times(0)).save(any(UserEntity.class));
+        verify(pickupPointRepository, times(0)).existsByPickupPointId(any(UUID.class));
+        verify(pickupPointRepository, times(0)).findByPickupPointId(any(UUID.class));
     }
 
     @Test
@@ -225,6 +257,8 @@ class AuthenticationServiceTest {
 
         verify(userRepository, times(0)).existsByEmail("user");
         verify(userRepository, times(0)).save(any(UserEntity.class));
+        verify(pickupPointRepository, times(0)).existsByPickupPointId(any(UUID.class));
+        verify(pickupPointRepository, times(0)).findByPickupPointId(any(UUID.class));
     }
 
     @Test
@@ -284,5 +318,78 @@ class AuthenticationServiceTest {
 
         verify(userRepository, times(1)).findByEmail("user");
         verify(userRepository, times(1)).save(any(UserEntity.class));
+    }
+
+    @Test
+    @DisplayName("Test updating the profile with an invalid pickup point id")
+    void testUpdateProfileInvalidPickupPointId() {
+        when(userRepository.findByEmail("user")).thenReturn(new UserEntity(
+                passwordEncoder.encode("password"),
+                "address",
+                "user",
+                "creditCardNumber",
+                123L,
+                "creditCardCVC",
+                new PickupPointEntity(
+                        UUID.randomUUID(),
+                        "name",
+                        "address"
+                )
+        ));
+
+        UserRequest request = new UserRequest(
+                "password",
+                "address",
+                "user",
+                null,
+                null,
+                null,
+                "invalid"
+        );
+        ProfileUpdateResponse response = authenticationService.updateProfile("user", request);
+
+        assertThat(response, is(notNullValue()));
+        assertThat(response.isSuccess(), is(false));
+
+        verify(userRepository, times(1)).findByEmail("user");
+        verify(userRepository, times(0)).save(any(UserEntity.class));
+        verify(pickupPointRepository, times(0)).findByPickupPointId(any(UUID.class));
+    }
+
+    @Test
+    @DisplayName("Test if updating the profile fails when pickup point does not exist")
+    void testUpdateProfileFail() {
+        when(userRepository.findByEmail("user")).thenReturn(new UserEntity(
+                passwordEncoder.encode("password"),
+                "address",
+                "user",
+                "creditCardNumber",
+                123L,
+                "creditCardCVC",
+                new PickupPointEntity(
+                        UUID.randomUUID(),
+                        "name",
+                        "address"
+                )
+        ));
+
+        when(pickupPointRepository.existsByPickupPointId(any(UUID.class))).thenReturn(false);
+
+        UserRequest request = new UserRequest(
+                "password",
+                "address",
+                "user",
+                null,
+                null,
+                null,
+                UUID.randomUUID().toString()
+        );
+        ProfileUpdateResponse response = authenticationService.updateProfile("user", request);
+
+        assertThat(response, is(notNullValue()));
+        assertThat(response.isSuccess(), is(false));
+
+        verify(userRepository, times(1)).findByEmail("user");
+        verify(userRepository, times(0)).save(any(UserEntity.class));
     }
 }

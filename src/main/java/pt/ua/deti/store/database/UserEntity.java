@@ -78,4 +78,32 @@ public class UserEntity {
     public PickupPointEntity getPreferredPickupPointId() {
         return preferredPickupPointId;
     }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setCreditCardNumber(String creditCardNumber) {
+        this.creditCardNumber = creditCardNumber;
+    }
+
+    public void setCreditCardValidity(Long creditCardValidity) {
+        this.creditCardValidity = creditCardValidity;
+    }
+
+    public void setCreditCardCVC(String creditCardCVC) {
+        this.creditCardCVC = creditCardCVC;
+    }
+
+    public void setPreferredPickupPointId(PickupPointEntity preferredPickupPointId) {
+        this.preferredPickupPointId = preferredPickupPointId;
+    }
 }
