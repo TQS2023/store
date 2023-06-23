@@ -8,4 +8,12 @@ public class PickyAllPackages {
 
     @JsonProperty("packages")
     private PickyPackage[] packages;
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public PickyPackage[] getPackages() {
+        return packages;
+    }
 }

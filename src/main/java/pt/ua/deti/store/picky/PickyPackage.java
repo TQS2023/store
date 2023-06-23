@@ -17,4 +17,24 @@ public class PickyPackage {
 
     @JsonProperty("address")
     private String address;
+
+    public String getPackageId() {
+        return packageId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public String[] getItems() {
+        return items;
+    }
+
+    public String getAddress() {
+        return address;
+    }
 }
