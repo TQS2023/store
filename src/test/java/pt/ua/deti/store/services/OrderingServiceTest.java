@@ -39,7 +39,24 @@ class OrderingServiceTest {
     @DisplayName("Test creating a normal package")
     void testCreatingANormalPackage() {
         when(userRepository.findByEmail("User1")).thenReturn(new UserEntity(
-                "password", "address", "User1", "creditCardNumber", 1L, "creditCardCVC", null
+                UUID.randomUUID(), "password", "address", "User1", "creditCardNumber", 1L, "creditCardCVC", null
+        ));
+        when(packageRepository.save(ArgumentMatchers.any(PackageEntity.class))).thenReturn(new PackageEntity(
+            UUID.randomUUID(),
+            new UserEntity(
+                    UUID.randomUUID(), "password", "address", "User1", "creditCardNumber", 1L, "creditCardCVC", null
+            ),
+
+            "status",
+            List.of(new ProductEntity(
+                    UUID.randomUUID(),
+                    "Title",
+                    "Author",
+                    "Description",
+                    12.99
+                    )
+            ),
+            "address"
         ));
 
         CreatePackageResponse response = orderingService.createPackage("User1", new ProductListRequest(

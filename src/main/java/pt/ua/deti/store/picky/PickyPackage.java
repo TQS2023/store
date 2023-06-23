@@ -18,6 +18,14 @@ public class PickyPackage {
     @JsonProperty("address")
     private String address;
 
+    public PickyPackage(String packageId, String userId, String status, String[] items, String address) {
+        this.packageId = packageId;
+        this.userId = userId;
+        this.status = status;
+        this.items = items;
+        this.address = address;
+    }
+
     public String getPackageId() {
         return packageId;
     }
