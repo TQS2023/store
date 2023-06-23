@@ -13,7 +13,7 @@ import pt.ua.deti.store.services.ProductService;
 import java.util.ArrayList;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/product")
 public class ProductApi {
     private final ProductService productService;
 
@@ -21,7 +21,7 @@ public class ProductApi {
         this.productService = productService;
     }
 
-    @GetMapping("/product/all")
+    @GetMapping("/all")
     public ResponseEntity<ProductListingResponse> getAllProducts() {
         ProductListingResponse result = productService.getListing();
 
@@ -36,7 +36,7 @@ public class ProductApi {
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping("/product/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ProductResponse> getProductById(@PathVariable String id) {
         ProductResponse result = productService.getProductById(id);
 

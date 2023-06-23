@@ -5,25 +5,31 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import pt.ua.deti.store.entities.ProductListingResponse;
 import pt.ua.deti.store.entities.ProductResponse;
+import pt.ua.deti.store.security.SecurityConfig;
 import pt.ua.deti.store.services.ProductService;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @TestPropertySource(locations = "classpath:inmemdb.properties")
-@WebMvcTest(ProductApi.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+@AutoConfigureMockMvc
 class ProductApiTest {
     @Autowired
     private MockMvc mockMvc;
@@ -75,7 +81,7 @@ class ProductApiTest {
         mockMvc.perform(
                         MockMvcRequestBuilders.get("/api/product/all").contentType("application/json")
                 )
-                .andExpect(MockMvcResultMatchers.status().is5xxServerError())
+                .andExpect(MockMvcResultMatchers.status().isInternalServerError())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(false));
 
         verify(productService, times(1)).getListing();
