@@ -32,7 +32,7 @@ public class ProductService {
     }
 
     public ProductResponse getProductById(String productId) {
-        ProductEntity productEntity = repository.findProductEntityById(UUID.fromString(productId));
+        ProductEntity productEntity = repository.findByProductId(UUID.fromString(productId));
         if (productEntity == null) {
             return null;
         }
