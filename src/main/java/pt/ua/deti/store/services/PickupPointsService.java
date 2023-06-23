@@ -5,7 +5,7 @@ import pt.ua.deti.store.entities.PickupPointListingResponse;
 
 @Service
 public class PickupPointsService {
-    public PickupPointListingResponse getALl() {
+    public PickupPointListingResponse getAll() {
         return null;
     }
 }

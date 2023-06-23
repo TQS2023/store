@@ -1,14 +1,16 @@
 package pt.ua.deti.store.entities;
 
 
+import java.util.List;
+
 public class PackageResponse {
     private final String packageId;
     private final String userId;
     private final String status;
-    private final String[] items;
+    private final List<String> items;
     private final String address;
 
-    public PackageResponse(String packageId, String userId, String status, String[] items, String address) {
+    public PackageResponse(String packageId, String userId, String status, List<String> items, String address) {
         this.packageId = packageId;
         this.userId = userId;
         this.status = status;
@@ -28,7 +30,7 @@ public class PackageResponse {
         return status;
     }
 
-    public String[] getItems() {
+    public List<String> getItems() {
         return items;
     }
 

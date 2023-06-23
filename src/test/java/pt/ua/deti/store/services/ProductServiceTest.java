@@ -65,7 +65,7 @@ class ProductServiceTest {
     @DisplayName("Test if we can get a specific product in the DB.")
     void testGetProduct() {
         UUID uuid = UUID.randomUUID();
-        when(productRepository.findProductEntityById(uuid)).thenReturn(
+        when(productRepository.findByProductId(uuid)).thenReturn(
                 new ProductEntity(uuid, "productName", "productAuthor", "productDescription", 10.0)
         );
 
@@ -77,19 +77,19 @@ class ProductServiceTest {
         assertThat(product.getDescription(), is("productDescription"));
         assertThat(product.getPrice(), is(10.0));
 
-        verify(productRepository, times(1)).findProductEntityById(uuid);
+        verify(productRepository, times(1)).findByProductId(uuid);
     }
 
     @Test
     @DisplayName("Test if we can get a specific product in the DB when there is no entity found.")
     void testGetProductEmpty() {
         UUID uuid = UUID.randomUUID();
-        when(productRepository.findProductEntityById(uuid)).thenReturn(null);
+        when(productRepository.findByProductId(uuid)).thenReturn(null);
 
         ProductResponse product = productService.getProductById(uuid.toString());
 
         assertThat(product, is(nullValue()));
 
-        verify(productRepository, times(1)).findProductEntityById(uuid);
+        verify(productRepository, times(1)).findByProductId(uuid);
     }
 }

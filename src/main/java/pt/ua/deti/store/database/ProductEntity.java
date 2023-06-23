@@ -9,7 +9,7 @@ import java.util.UUID;
 public class ProductEntity {
     @Id
     @GeneratedValue(generator = "uuid")
-    private UUID id;
+    private UUID productId;
 
     @Column(name = "title", nullable = false)
     private String title;
@@ -34,8 +34,8 @@ public class ProductEntity {
         this.price = price;
     }
 
-    public ProductEntity(UUID id, String title, String author, String description, double price) {
-        this.id = id;
+    public ProductEntity(UUID productId, String title, String author, String description, double price) {
+        this.productId = productId;
         this.title = title;
         this.author = author;
         this.description = description;
@@ -43,7 +43,7 @@ public class ProductEntity {
     }
 
     public UUID getProductId() {
-        return id;
+        return productId;
     }
 
 

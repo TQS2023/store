@@ -7,12 +7,9 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 
 @Service
 public class Api {
-    @Value("${picky.api.url}")
-    private String url;
-
     private final ApiDecl picky;
 
-    public Api() {
+    public Api(@Value("${picky.api.url}") String url) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
                 .addConverterFactory(JacksonConverterFactory.create())
