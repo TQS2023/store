@@ -19,7 +19,7 @@ public class AuthenticationApi {
     @PostMapping("/login")
     public ResponseEntity<TokenResponse> login(@RequestBody LoginRequest loginRequest) {
         TokenResponse tokenResponse = service.login(loginRequest);
-        if (!tokenResponse.isSuccess()) {
+        if (Boolean.FALSE.equals(tokenResponse.isSuccess())) {
             return ResponseEntity.status(401).body(tokenResponse);
         }
 
@@ -29,7 +29,7 @@ public class AuthenticationApi {
     @PostMapping("/register")
     public ResponseEntity<TokenResponse> register(@RequestBody UserRequest user) {
         TokenResponse tokenResponse = service.register(user);
-        if (!tokenResponse.isSuccess()) {
+        if (Boolean.FALSE.equals(tokenResponse.isSuccess())) {
             return ResponseEntity.internalServerError().body(tokenResponse);
         }
 
@@ -48,7 +48,7 @@ public class AuthenticationApi {
     public ResponseEntity<ProfileUpdateResponse> updateProfile(@RequestHeader("Authorization") String token, @RequestBody UserRequest userRequest) {
         String user = Jwt.getSubject(token.replace("Bearer ", ""));
         ProfileUpdateResponse response = service.updateProfile(user, userRequest);
-        if (!response.isSuccess()) {
+        if (Boolean.FALSE.equals(response.isSuccess())) {
             return ResponseEntity.internalServerError().body(response);
         }
         return ResponseEntity.ok(response);

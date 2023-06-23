@@ -1,6 +1,5 @@
 package pt.ua.deti.store.services;
 
-import org.h2.engine.User;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -43,7 +42,6 @@ public class AuthenticationService {
             String token = Jwt.generateToken(user);
             return new TokenResponse(token, true);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             return new TokenResponse("", false);
         }
     }
