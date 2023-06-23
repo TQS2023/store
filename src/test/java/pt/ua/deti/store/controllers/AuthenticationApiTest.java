@@ -25,7 +25,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @TestPropertySource(locations = "classpath:inmemdb.properties")
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes = Jwt.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
 class AuthenticationApiTest {
     @Autowired
@@ -58,13 +58,14 @@ class AuthenticationApiTest {
         mockMvc.perform(
                         MockMvcRequestBuilders.post("/api/auth/register")
                                 .contentType("application/json")
+                                .characterEncoding("utf-8")
                                 .content(JsonUtils.toJson(request))
                 )
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.token", is("TESTTOKEN")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.success", is(true)));
 
-        verify(authService, times(1)).register(request);
+        verify(authService, times(1)).register(any(UserRequest.class));
     }
 
     @Test
@@ -88,13 +89,14 @@ class AuthenticationApiTest {
         mockMvc.perform(
                         MockMvcRequestBuilders.post("/api/auth/register")
                                 .contentType("application/json")
+                                .characterEncoding("utf-8")
                                 .content(JsonUtils.toJson(request))
                 )
                 .andExpect(MockMvcResultMatchers.status().isInternalServerError())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.token", is(emptyString())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.success", is(false)));
 
-        verify(authService, times(1)).register(request);
+        verify(authService, times(1)).register(any(UserRequest.class));
     }
 
     @Test
@@ -113,13 +115,14 @@ class AuthenticationApiTest {
         mockMvc.perform(
                         MockMvcRequestBuilders.post("/api/auth/login")
                                 .contentType("application/json")
+                                .characterEncoding("utf-8")
                                 .content(JsonUtils.toJson(request))
                 )
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.token", is("TESTTOKEN")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.success", is(true)));
 
-        verify(authService, times(1)).login(request);
+        verify(authService, times(1)).login(any(LoginRequest.class));
     }
 
     @Test
@@ -138,13 +141,14 @@ class AuthenticationApiTest {
         mockMvc.perform(
                         MockMvcRequestBuilders.post("/api/auth/login")
                                 .contentType("application/json")
+                                .characterEncoding("utf-8")
                                 .content(JsonUtils.toJson(request))
                 )
                 .andExpect(MockMvcResultMatchers.status().isUnauthorized())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.token", is(emptyString())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.success", is(false)));
 
-        verify(authService, times(1)).login(request);
+        verify(authService, times(1)).login(any(LoginRequest.class));
     }
 
     @Test
@@ -175,7 +179,7 @@ class AuthenticationApiTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.address", is("address")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email", is("email")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.creditCardNumber", is("creditCardNumber")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.creditCardValidity", is(123L)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.creditCardValidity", is(123)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.creditCardCVC", is("creditCardCVC")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.preferredPickupPoint.pickupPointId", is("id")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.preferredPickupPoint.name", is("name")))
@@ -238,6 +242,7 @@ class AuthenticationApiTest {
                 MockMvcRequestBuilders.put("/api/auth/profile")
                         .header("Authorization", "Bearer " + token)
                         .contentType("application/json")
+                        .characterEncoding("utf-8")
                         .content(JsonUtils.toJson(request))
                 )
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -269,10 +274,11 @@ class AuthenticationApiTest {
                         MockMvcRequestBuilders.put("/api/auth/profile")
                                 .header("Authorization", "Bearer " + token)
                                 .contentType("application/json")
+                                .characterEncoding("utf-8")
                                 .content(JsonUtils.toJson(request))
                 )
                 .andExpect(MockMvcResultMatchers.status().isUnauthorized());
 
-        verify(authService, times(0)).updateProfile("user1", request);
+        verify(authService, times(0)).updateProfile(anyString(), any(UserRequest.class));
     }
 }

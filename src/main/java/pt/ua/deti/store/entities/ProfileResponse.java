@@ -9,15 +9,15 @@ public class ProfileResponse {
     private final String creditCardNumber;
     private final Long creditCardValidity;
     private final String creditCardCVC;
-    private final PickupPointResponse preferredPickupPointId;
+    private final PickupPointResponse preferredPickupPoint;
 
-    public ProfileResponse(String address, String email, String creditCardNumber, Long creditCardValidity, String creditCardCVC, PickupPointResponse preferredPickupPointId) {
+    public ProfileResponse(String address, String email, String creditCardNumber, Long creditCardValidity, String creditCardCVC, PickupPointResponse preferredPickupPoint) {
         this.address = address;
         this.email = email;
         this.creditCardNumber = creditCardNumber;
         this.creditCardValidity = creditCardValidity;
         this.creditCardCVC = creditCardCVC;
-        this.preferredPickupPointId = preferredPickupPointId;
+        this.preferredPickupPoint = preferredPickupPoint;
     }
 
     public static ProfileResponse fromEntity(UserEntity user) {
@@ -51,7 +51,7 @@ public class ProfileResponse {
         return creditCardCVC;
     }
 
-    public PickupPointResponse getPreferredPickupPointId() {
-        return preferredPickupPointId;
+    public PickupPointResponse getPreferredPickupPoint() {
+        return preferredPickupPoint;
     }
 }
