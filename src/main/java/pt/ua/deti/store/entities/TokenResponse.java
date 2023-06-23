@@ -13,7 +13,7 @@ public class TokenResponse {
         return token;
     }
 
-    public Boolean getSuccess() {
+    public Boolean isSuccess() {
         return success;
     }
 }

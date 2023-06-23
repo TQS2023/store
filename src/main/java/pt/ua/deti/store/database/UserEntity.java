@@ -32,8 +32,8 @@ public class UserEntity {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "preferred_pickup_point_id", referencedColumnName = "pickup_point_id")
-
     private PickupPointEntity preferredPickupPointId;
+
     public UserEntity(String password, String address, String email, String creditCardNumber, Long creditCardValidity, String creditCardCVC, PickupPointEntity preferredPickupPointId) {
         this.password = password;
         this.address = address;
