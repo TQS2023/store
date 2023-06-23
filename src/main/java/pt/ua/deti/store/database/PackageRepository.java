@@ -7,4 +7,5 @@ import java.util.UUID;
 
 public interface PackageRepository extends JpaRepository<PackageEntity, String> {
     List<PackageEntity> findAllByUserId(UserEntity user);
+    boolean existsByPackageId(UUID packageId);
 }

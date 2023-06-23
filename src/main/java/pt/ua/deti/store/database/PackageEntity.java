@@ -10,7 +10,6 @@ import java.util.UUID;
 public class PackageEntity {
     @Id
     @Column(name = "package_id")
-    @GeneratedValue(generator = "uuid")
     private UUID packageId;
 
     @OneToOne(cascade = CascadeType.ALL)

@@ -9,7 +9,6 @@ import java.util.UUID;
 public class PickupPointEntity {
     @Id
     @Column(name = "pickup_point_id")
-    @GeneratedValue(generator = "uuid")
     private UUID pickupPointId;
 
     @Column(name = "name")

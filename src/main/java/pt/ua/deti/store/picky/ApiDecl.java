@@ -11,7 +11,7 @@ public interface ApiDecl {
 
     @POST("/api/package/new")
     Call<PickyCreatePackage> createPackage(
-            @Body PickyPackage pickyPackage
+            @Body PickyPackageRequest pickyPackage
     );
 
     @GET("/api/package/all")
