@@ -23,7 +23,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 @TestPropertySource(locations = "classpath:inmemdb.properties")
 @SpringBootTest
-public class PickupPointsServiceTest {
+class PickupPointsServiceTest {
     @Autowired
     private PickupPointsService pickupPointsService;
 
@@ -32,7 +32,7 @@ public class PickupPointsServiceTest {
 
     @Test
     @DisplayName("Test if PickupPointsService is working")
-    public void testPickupPointsService() {
+    void testPickupPointsService() {
         when(pickupPointsRepository.findAll()).thenReturn(
                 List.of(
                         new PickupPointEntity(UUID.randomUUID(), "name1", "addr1"),

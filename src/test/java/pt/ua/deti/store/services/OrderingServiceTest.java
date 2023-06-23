@@ -25,7 +25,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 @TestPropertySource(locations = "classpath:inmemdb.properties")
 @SpringBootTest
-public class OrderingServiceTest {
+class OrderingServiceTest {
     @Autowired
     private OrderingService orderingService;
 
@@ -37,7 +37,7 @@ public class OrderingServiceTest {
 
     @Test
     @DisplayName("Test creating a normal package")
-    public void testCreatingANormalPackage() {
+    void testCreatingANormalPackage() {
         when(userRepository.findByEmail("User1")).thenReturn(new UserEntity(
                 "password", "address", "User1", "creditCardNumber", 1L, "creditCardCVC", null
         ));
@@ -52,7 +52,7 @@ public class OrderingServiceTest {
 
     @Test
     @DisplayName("Test creating a package with no products")
-    public void testCreatingANormalPackageWithNoProducts() {
+    void testCreatingANormalPackageWithNoProducts() {
         when(userRepository.findByEmail("User1")).thenReturn(new UserEntity(
                 "password", "address", "User1", "creditCardNumber", 1L, "creditCardCVC", null
         ));
@@ -67,7 +67,7 @@ public class OrderingServiceTest {
 
     @Test
     @DisplayName("Test retrieving all my packages")
-    public void testRetrievingAllMyPackages() {
+    void testRetrievingAllMyPackages() {
         when(userRepository.findByEmail("User1")).thenReturn(new UserEntity(
                 "password", "address", "User1", "creditCardNumber", 1L, "creditCardCVC", null
         ));
