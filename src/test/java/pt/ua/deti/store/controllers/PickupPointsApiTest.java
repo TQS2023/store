@@ -52,9 +52,9 @@ class PickupPointsApiTest {
                 true
         ));
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/pickup-points"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/pickuppoints/all"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(0)));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.pickupPoints", hasSize(2)));
 
         verify(pickupPointsService, times(1)).getAll();
     }
@@ -67,7 +67,7 @@ class PickupPointsApiTest {
                 false
         ));
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/pickup-points"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/pickuppoints/all"))
                 .andExpect(MockMvcResultMatchers.status().isInternalServerError());
 
         verify(pickupPointsService, times(1)).getAll();

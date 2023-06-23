@@ -1,5 +1,6 @@
 package pt.ua.deti.store.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductListRequest {
@@ -7,6 +8,10 @@ public class ProductListRequest {
 
     public ProductListRequest(List<String> products) {
         this.products = products;
+    }
+
+    public ProductListRequest() {
+        this.products = new ArrayList<>();
     }
 
     public List<String> getProducts() {

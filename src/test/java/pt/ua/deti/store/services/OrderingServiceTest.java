@@ -43,7 +43,7 @@ public class OrderingServiceTest {
         ));
 
         CreatePackageResponse response = orderingService.createPackage("User1", new ProductListRequest(
-                List.of("Product1", "Product2", "Product3")
+                List.of(UUID.randomUUID().toString(), UUID.randomUUID().toString(), UUID.randomUUID().toString())
         ));
 
         assertThat(response, is(notNullValue()));

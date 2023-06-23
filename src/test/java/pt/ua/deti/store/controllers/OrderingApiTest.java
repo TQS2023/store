@@ -55,7 +55,7 @@ class OrderingApiTest {
         when(jwtFilter.filter()).thenReturn(true);
 
         mockMvc.perform(
-                MockMvcRequestBuilders.post("/api/v1/ordering")
+                MockMvcRequestBuilders.post("/api/order/create")
                         .header("Authorization", "Bearer " + token)
                         .contentType("application/json")
                         .content(JsonUtils.toJson(new ProductListRequest(List.of("Product1", "Product2"))))
@@ -78,10 +78,10 @@ class OrderingApiTest {
         when(jwtFilter.filter()).thenReturn(true);
 
         mockMvc.perform(
-                        MockMvcRequestBuilders.post("/api/v1/ordering")
-                                .header("Authorization", "Bearer " + token)
-                                .contentType("application/json")
-                                .content(JsonUtils.toJson(new ProductListRequest(List.of("Product1", "Product2"))))
+                    MockMvcRequestBuilders.post("/api/order/create")
+                            .header("Authorization", "Bearer " + token)
+                            .contentType("application/json")
+                            .content(JsonUtils.toJson(new ProductListRequest(List.of("Product1", "Product2"))))
                 )
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.success", is(false)));
@@ -95,7 +95,7 @@ class OrderingApiTest {
         when(jwtFilter.filter()).thenReturn(false);
 
         mockMvc.perform(
-                        MockMvcRequestBuilders.post("/api/v1/ordering")
+                        MockMvcRequestBuilders.post("/api/order/create")
                                 .header("Authorization", "Bearer XXXX")
                                 .contentType("application/json")
                                 .content(JsonUtils.toJson(new ProductListRequest(List.of("Product1", "Product2"))))
@@ -134,7 +134,7 @@ class OrderingApiTest {
         when(jwtFilter.filter()).thenReturn(true);
 
         mockMvc.perform(
-                        MockMvcRequestBuilders.get("/api/v1/ordering")
+                        MockMvcRequestBuilders.get("/api/order/my")
                                 .header("Authorization", "Bearer " + token)
                 )
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -149,7 +149,7 @@ class OrderingApiTest {
         when(jwtFilter.filter()).thenReturn(false);
 
         mockMvc.perform(
-                        MockMvcRequestBuilders.get("/api/v1/ordering")
+                        MockMvcRequestBuilders.get("/api/order/my")
                                 .header("Authorization", "Bearer XXXX")
                 )
                 .andExpect(MockMvcResultMatchers.status().isUnauthorized());
