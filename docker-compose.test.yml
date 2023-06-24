@@ -1,0 +1,49 @@
+services:
+  frontend:
+    image: localhost:5000/tqsrec-frontend:latest
+    environment:
+      - APP_BACKEND_URL=http://shop:8080/api
+    healthcheck:
+      test: ["CMD-SHELL", "curl --silent --fail http://localhost:3000 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    depends_on:
+      shop:
+        condition: service_healthy
+
+  shop:
+    image: localhost:5000/tqsrec-shop:latest
+    environment:
+      - MYSQL_URL=jdbc:mysql://mysql:3306/tqsproject
+      - PICKY_URL=http://picky:8000
+    depends_on:
+      picky:
+        condition: service_started
+      mysql:
+        condition: service_healthy
+
+  mysql:
+    image: mysql/mysql-server:8.0.32
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=tqsproject
+      - MYSQL_USER=tqs
+      - MYSQL_PASSWORD=1234
+
+  picky:
+    image: localhost:5000/tqsrec-picky:latest
+    depends_on:
+      firefox:
+        condition: service_healthy
+
+  firefox:
+    image: selenium/standalone-firefox
+    ports:
+      - 4444:4444/tcp
+      - 5900:5900/tcp
+    healthcheck:
+      test: ["CMD-SHELL", "curl --silent --fail http://localhost:4444/status || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
