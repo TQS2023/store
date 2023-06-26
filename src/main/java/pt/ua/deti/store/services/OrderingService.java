@@ -7,7 +7,6 @@ import pt.ua.deti.store.entities.PackageListingResponse;
 import pt.ua.deti.store.entities.PackageResponse;
 import pt.ua.deti.store.entities.ProductListRequest;
 import pt.ua.deti.store.picky.Api;
-import pt.ua.deti.store.picky.PickyPackage;
 import pt.ua.deti.store.picky.PickyPackageRequest;
 
 import java.util.List;

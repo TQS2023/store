@@ -51,7 +51,7 @@ class OrderingServiceTest {
             ),
 
             "status",
-            List.of(new ProductEntity(
+            List.of(new PackageProductEntity(
                     UUID.randomUUID(),
                     "Title",
                     "Author",
@@ -109,7 +109,7 @@ class OrderingServiceTest {
                         ),
                 "status",
                 List.of(
-                        new ProductEntity(
+                        new PackageProductEntity(
                                 UUID.randomUUID(),
                                 "Title",
                                 "Author",

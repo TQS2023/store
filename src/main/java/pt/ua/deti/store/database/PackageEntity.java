@@ -21,12 +21,12 @@ public class PackageEntity {
 
     @Column(name = "status")
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<ProductEntity> products;
+    private List<PackageProductEntity> products;
 
     @Column(name = "address")
     private String address;
 
-    public PackageEntity(UUID packageId, UserEntity userId, String status, List<ProductEntity> products, String address) {
+    public PackageEntity(UUID packageId, UserEntity userId, String status, List<PackageProductEntity> products, String address) {
         this.packageId = packageId;
         this.userId = userId;
         this.status = status;
@@ -50,7 +50,7 @@ public class PackageEntity {
         return status;
     }
 
-    public List<ProductEntity> getProducts() {
+    public List<PackageProductEntity> getProducts() {
         return products;
     }
 

@@ -32,15 +32,15 @@ public class PickyService {
         }
 
         Arrays.stream(pickyPickupPoints.getPickupPoints()).forEach(p -> {
+            if (pickupPointRepository.existsByPickupPointId(UUID.fromString(p.getId()))) {
+                return;
+            }
+
             PickupPointEntity pEnt = new PickupPointEntity(
                     UUID.fromString(p.getId()),
                     p.getName(),
                     p.getAddress()
             );
-
-            if (pickupPointRepository.existsByPickupPointId(UUID.fromString(p.getId()))) {
-                return;
-            }
 
             pickupPointRepository.save(pEnt);
         });
@@ -54,19 +54,18 @@ public class PickyService {
             return;
         }
 
-
         Arrays.stream(pickyPackages.getPackages()).forEach(p -> {
+            if (packageRepository.existsByPackageId(UUID.fromString(p.getPackageId()))) {
+                return;
+            }
+
             PackageEntity pEnt = new PackageEntity(
                     UUID.fromString(p.getPackageId()),
                     userRepository.findByUserId(UUID.fromString(p.getUserId())),
                     p.getStatus(),
-                    Arrays.stream(p.getItems()).map(product -> productRepository.findByProductId(UUID.fromString(product))).toList(),
+                    Arrays.stream(p.getItems()).map(product -> new PackageProductEntity(productRepository.findByProductId(UUID.fromString(product)))).toList(),
                     p.getAddress()
             );
-
-            if (packageRepository.existsByPackageId(UUID.fromString(p.getPackageId()))) {
-                return;
-            }
 
             packageRepository.save(pEnt);
         });
