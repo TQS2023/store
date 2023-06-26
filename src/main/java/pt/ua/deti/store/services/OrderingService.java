@@ -7,7 +7,6 @@ import pt.ua.deti.store.entities.PackageListingResponse;
 import pt.ua.deti.store.entities.PackageResponse;
 import pt.ua.deti.store.entities.ProductListRequest;
 import pt.ua.deti.store.picky.Api;
-import pt.ua.deti.store.picky.PickyPackage;
 import pt.ua.deti.store.picky.PickyPackageRequest;
 
 import java.util.List;
@@ -33,7 +32,6 @@ public class OrderingService {
         }
 
         UserEntity userEntity = userRepository.findByEmail(user);
-        System.out.println(productListRequest.getProducts());
         List<ProductEntity> products = productListRequest.getProducts().stream().map(product -> productRepository.findByProductId(UUID.fromString(product))).toList();
 
         PickyPackageRequest pickyPackage = new PickyPackageRequest(
