@@ -33,6 +33,7 @@ public class OrderingService {
         }
 
         UserEntity userEntity = userRepository.findByEmail(user);
+        System.out.println(productListRequest.getProducts());
         List<ProductEntity> products = productListRequest.getProducts().stream().map(product -> productRepository.findByProductId(UUID.fromString(product))).toList();
 
         PickyPackageRequest pickyPackage = new PickyPackageRequest(

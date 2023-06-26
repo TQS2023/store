@@ -26,6 +26,10 @@ public class PickyPackage {
         this.address = address;
     }
 
+    public PickyPackage() {
+
+    }
+
     public String getPackageId() {
         return packageId;
     }
