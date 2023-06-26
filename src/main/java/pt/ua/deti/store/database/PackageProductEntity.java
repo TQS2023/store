@@ -31,7 +31,6 @@ public class PackageProductEntity {
     }
 
     public PackageProductEntity(ProductEntity entity) {
-        this.packageProductId = entity.getProductId();
         this.productId = entity.getProductId();
         this.title = entity.getTitle();
         this.author = entity.getAuthor();
