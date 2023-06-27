@@ -19,7 +19,7 @@ public class PackageEntity {
     @Column(name = "status")
     private String status;
 
-    @Column(name = "status")
+    @Column(name = "products")
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<PackageProductEntity> products;
 

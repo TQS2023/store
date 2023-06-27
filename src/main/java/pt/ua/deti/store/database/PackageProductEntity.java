@@ -38,13 +38,6 @@ public class PackageProductEntity {
         this.price = entity.getPrice();
     }
 
-    public PackageProductEntity(String title, String author, String description, double price) {
-        this.title = title;
-        this.author = author;
-        this.description = description;
-        this.price = price;
-    }
-
     public PackageProductEntity(UUID productId, String title, String author, String description, double price) {
         this.productId = productId;
         this.title = title;
@@ -72,5 +65,9 @@ public class PackageProductEntity {
 
     public String getAuthor() {
         return author;
+    }
+
+    public UUID getPackageProductId() {
+        return packageProductId;
     }
 }
