@@ -66,8 +66,10 @@ public class PickyService {
                     Arrays.stream(p.getItems()).map(product -> new PackageProductEntity(productRepository.findByProductId(UUID.fromString(product)))).toList(),
                     p.getAddress()
             );
-
-            packageRepository.save(pEnt);
+            try {
+                packageRepository.save(pEnt);
+            } catch (Exception ignored) {
+            }
         });
     }
 }
