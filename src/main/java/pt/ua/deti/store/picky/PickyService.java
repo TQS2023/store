@@ -55,7 +55,7 @@ public class PickyService {
         }
 
         Arrays.stream(pickyPackages.getPackages()).forEach(p -> {
-            if (packageRepository.existsByPackageId(UUID.fromString(p.getPackageId()))) {
+            if (packageRepository.findByPackageId(UUID.fromString(p.getPackageId())) != null) {
                 return;
             }
 
